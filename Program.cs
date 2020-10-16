@@ -28,7 +28,6 @@ namespace Table
                 if (i != VertNum) LinePrint(whight, GorisontNum, GorisontPass, "├", "┼", "┤");
             }
             LinePrint(whight, GorisontNum, GorisontPass, "└", "┴", "┘");
-            ReColour(1, 1, GorisontPass, VertPass, hight, whight);
         }
         static void GorisontPassing (int GorPass)
         {
@@ -69,25 +68,6 @@ namespace Table
                 }
             }
             Console.WriteLine("│");
-        }
-        static void ReColour (int gorID, int vertID, int gorisontPass, int vertPass, int hight, int whight)
-        {
-            Console.SetCursorPosition((gorisontPass + (gorID * (whight - 3)) + 1), (vertPass + (vertID * (hight - 2)) + 1));
-            Console.BackgroundColor = ConsoleColor.Red;
-            for (int i = 0; i < hight; i++)
-            {
-                Console.SetCursorPosition((gorisontPass + (gorID * (whight - 5)) + 1), (vertPass + (vertID * (hight - 2)) + 1));
-                for (int j = 0; j < whight; j++)
-                {
-                    Console.Write(" ");
-                }
-                if (i == (hight-1)) Console.SetCursorPosition((gorisontPass + (gorID * whight) + 1), (vertPass + (vertID * hight) + 1));
-            }
-            Console.BackgroundColor = ConsoleColor.Black;
-            for (int i = 0; i < 100; i++)
-            {
-                Console.WriteLine();
-            }
         }
     }
 }
