@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.CompilerServices;
+using System;
 
 namespace Table
 {
@@ -6,40 +7,49 @@ namespace Table
     {
         static void Main(string[] args)
         {
-            int hight = 5;
-            int whight = 5;
-            int GorisontNum = 11;
-            int VertNum= 4;
-            int GorisontPass= 10;
-            int VertPass = 3;
-            TablePrint(hight, whight, GorisontNum, VertNum, GorisontPass, VertPass);
+            int hight = 2;
+            int whight = 2;
+            int gorisontNum = 25;
+            int vertNum= 7;
+            int gorisontPass= 1;
+            int vertPass = 1;
+            int positionX = 1;
+            int positionY = 1;
+            while (true)
+            {
+                int[] delta = GetMoove(positionX, positionY, vertNum, gorisontNum);
+                positionX = positionX + delta[0];
+                positionY = positionY + delta[1];
+                TablePrint(hight, whight, gorisontNum, vertNum, gorisontPass, vertPass);
+                ReColour(positionX, positionY, gorisontPass, vertPass, hight, whight);
+                Console.SetCursorPosition(0, 0);
+            }
         }
-        static void TablePrint(int hight, int whight, int GorisontNum, int VertNum, int GorisontPass, int VertPass)
+        static void TablePrint(int hight, int whight, int gorisontNum, int vertNum, int gorisontPass, int vertPass)
         {
-            VertPassing(VertPass);
-            LinePrint(whight, GorisontNum, GorisontPass, "┌", "┬", "┐");
-            for (int i = 1; i <= VertNum; i++)
+            VertPassing(vertPass);
+            LinePrint(whight, gorisontNum, gorisontPass, "┌", "┬", "┐");
+            for (int i = 1; i <= vertNum; i++)
             {
                 for (int j = 0; j < hight; j++)
                 {
-                    GorisontPassing(GorisontPass);
-                    WhitespacePrint(whight, GorisontNum, GorisontPass);
+                    GorisontPassing(gorisontPass);
+                    WhitespacePrint(whight, gorisontNum, gorisontPass);
                 }
-                if (i != VertNum) LinePrint(whight, GorisontNum, GorisontPass, "├", "┼", "┤");
+                if (i != vertNum) LinePrint(whight, gorisontNum, gorisontPass, "├", "┼", "┤");
             }
-            LinePrint(whight, GorisontNum, GorisontPass, "└", "┴", "┘");
-            ReColour(3, 1, GorisontPass, VertPass, hight, whight);
+            LinePrint(whight, gorisontNum, gorisontPass, "└", "┴", "┘");
         }
-        static void GorisontPassing (int GorPass)
+        static void GorisontPassing (int gorPass)
         {
-            for (int i = 0; i < GorPass; i++)
+            for (int i = 0; i < gorPass; i++)
             {
                 Console.Write(" ");
             }
         }
-        static void VertPassing(int VertPass)
+        static void VertPassing(int vertPass)
         {
-            for (int i = 0; i < VertPass; i++)
+            for (int i = 0; i < vertPass; i++)
             {
                 Console.WriteLine();
             }
@@ -84,14 +94,37 @@ namespace Table
                 if (i == (hight - 1)) Console.SetCursorPosition(GetPosition(gorisontPass, gorID, whight), GetPosition(vertPass, vertID, hight));
             }
             Console.BackgroundColor = ConsoleColor.Black;
-            for (int i = 0; i < 100; i++)
-            {
-                Console.WriteLine();
-            }
         }
         static int GetPosition (int pass, int ID, int WH)
         {
             return (pass + 1 + (ID - 1) + ((ID - 1) * WH));
         }
+        static int[] GetMoove (int positionX, int positionY, int hight, int whight)
+        {
+            int[] delta = new int[2];
+            if (Console.KeyAvailable) 
+            {
+                ConsoleKeyInfo buttonPresed = Console.ReadKey();
+                if (buttonPresed.Key == ConsoleKey.RightArrow) delta[0] = 1;
+                if (buttonPresed.Key == ConsoleKey.LeftArrow) delta[0] = -1;
+                if (buttonPresed.Key == ConsoleKey.UpArrow) delta[1] = -1;
+                if (buttonPresed.Key == ConsoleKey.DownArrow) delta[1] = 1;
+            }
+            System.Threading.Thread.Sleep(25);
+            if (!IsMoveAvailable(positionX, positionY, hight, whight, delta)) { delta = new int[] { 0, 0 }; }
+                return delta;
+        }
+        static bool IsMoveAvailable(int positionX, int positionY, int hight, int whight, int[] delta)
+        {
+            bool result = false;
+            if (positionX + delta[0] <= whight &&
+                positionY + delta[1] <= hight  &&
+                positionX + delta[0] >= 1 &&
+                positionY + delta[1] >= 1)
+            {
+                result = true;
+            }
+            return result;
+        }
     }
-}
+ }
