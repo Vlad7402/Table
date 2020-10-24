@@ -26,8 +26,8 @@ namespace Table
                     positionY = positionY + delta[1];
                     TablePrint(hight, whight, gorisontNum, vertNum, gorisontPass, vertPass);
                     ReColour(positionX, positionY, gorisontPass, vertPass, hight, whight);
-                    Console.SetCursorPosition(0, 0);
                 }
+                Console.SetCursorPosition(0, 0);
             }
         }
         static void TablePrint(int hight, int whight, int gorisontNum, int vertNum, int gorisontPass, int vertPass)
@@ -117,7 +117,6 @@ namespace Table
             }
             System.Threading.Thread.Sleep(25);
             if (!IsMoveAvailable(positionX, positionY, hight, whight, delta)) { delta = new int[] { 0, 0 }; }
-            Console.SetCursorPosition(0, 0);
             return delta;
         }
         static bool IsMoveAvailable(int positionX, int positionY, int hight, int whight, int[] delta)
