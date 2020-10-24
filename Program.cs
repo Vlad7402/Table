@@ -15,14 +15,19 @@ namespace Table
             int vertPass = 1;
             int positionX = 1;
             int positionY = 1;
+            TablePrint(hight, whight, gorisontNum, vertNum, gorisontPass, vertPass);
+            ReColour(positionX, positionY, gorisontPass, vertPass, hight, whight);
             while (true)
             {
                 int[] delta = GetMoove(positionX, positionY, vertNum, gorisontNum);
-                positionX = positionX + delta[0];
-                positionY = positionY + delta[1];
-                TablePrint(hight, whight, gorisontNum, vertNum, gorisontPass, vertPass);
-                ReColour(positionX, positionY, gorisontPass, vertPass, hight, whight);
-                Console.SetCursorPosition(0, 0);
+                if (delta[0] != 0 || delta[1] != 0)
+                {
+                    positionX = positionX + delta[0];
+                    positionY = positionY + delta[1];
+                    TablePrint(hight, whight, gorisontNum, vertNum, gorisontPass, vertPass);
+                    ReColour(positionX, positionY, gorisontPass, vertPass, hight, whight);
+                    Console.SetCursorPosition(0, 0);
+                }
             }
         }
         static void TablePrint(int hight, int whight, int gorisontNum, int vertNum, int gorisontPass, int vertPass)
@@ -112,7 +117,8 @@ namespace Table
             }
             System.Threading.Thread.Sleep(25);
             if (!IsMoveAvailable(positionX, positionY, hight, whight, delta)) { delta = new int[] { 0, 0 }; }
-                return delta;
+            Console.SetCursorPosition(0, 0);
+            return delta;
         }
         static bool IsMoveAvailable(int positionX, int positionY, int hight, int whight, int[] delta)
         {
