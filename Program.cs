@@ -17,18 +17,7 @@ namespace Table
             int positionY = 1;
             TablePrint(hight, whight, gorisontNum, vertNum, gorisontPass, vertPass);
             ReColour(positionX, positionY, gorisontPass, vertPass, hight, whight);
-            while (true)
-            {
-                int[] delta = GetMoove(positionX, positionY, vertNum, gorisontNum);
-                if (delta[0] != 0 || delta[1] != 0)
-                {
-                    positionX = positionX + delta[0];
-                    positionY = positionY + delta[1];
-                    TablePrint(hight, whight, gorisontNum, vertNum, gorisontPass, vertPass);
-                    ReColour(positionX, positionY, gorisontPass, vertPass, hight, whight);
-                }
-                Console.SetCursorPosition(0, 0);
-            }
+            InteractiveBoard(positionX, positionY, vertNum, gorisontNum, hight, whight, gorisontPass, vertPass);
         }
         static void TablePrint(int hight, int whight, int gorisontNum, int vertNum, int gorisontPass, int vertPass)
         {
@@ -130,6 +119,21 @@ namespace Table
                 result = true;
             }
             return result;
+        }
+        static void InteractiveBoard (int positionX,int positionY,int vertNum,int gorisontNum,int hight,int whight, int gorisontPass, int vertPass)
+        {
+            while (true)
+            {
+                int[] delta = GetMoove(positionX, positionY, vertNum, gorisontNum);
+                if (delta[0] != 0 || delta[1] != 0)
+                {
+                    positionX = positionX + delta[0];
+                    positionY = positionY + delta[1];
+                    TablePrint(hight, whight, gorisontNum, vertNum, gorisontPass, vertPass);
+                    ReColour(positionX, positionY, gorisontPass, vertPass, hight, whight);
+                }
+                Console.SetCursorPosition(0, 0);
+            }
         }
     }
  }
